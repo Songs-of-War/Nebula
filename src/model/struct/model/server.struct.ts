@@ -121,7 +121,18 @@ export class ServerStructure extends BaseModelStructure<Server> {
                 const modules: Module[] = []
 
                 if(serverMeta.forge) {
-                    
+                    const forgeResolver = VersionSegmentedRegistry.getForgeResolver(
+                        minecraftVersion,
+                        serverMeta.forge.version,
+                        dirname(this.containerDirectory),
+                        '',
+                        this.baseUrl
+                    )
+
+                    // Resolve forge
+                    const forgeItselfModule = await forgeResolver.getModule()
+                    modules.push(forgeItselfModule)
+
                     const forgeModStruct = VersionSegmentedRegistry.getForgeModStruct(
                         minecraftVersion,
                         serverMeta.forge.version,
