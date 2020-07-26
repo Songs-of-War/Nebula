@@ -1,7 +1,7 @@
 {
   "name": "nebula",
   "version": "0.1.0",
-  "description": "Utility package to generate a distribution.json for Helios.",
+  "description": "",
   "main": "dist/index.js",
   "scripts": {
     "clean": "rimraf dist",
@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dscalzi/Nebula.git"
+    "url": "git+https://github.com/Songs-of-War/Nebula.git"
   },
   "keywords": [
     "helios",
@@ -22,9 +22,9 @@
   "author": "Daniel Scalzi",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/dscalzi/Nebula/issues"
+    "url": "https://github.com/Songs-of-War/Nebula/issues"
   },
-  "homepage": "https://github.com/dscalzi/Nebula#readme",
+  "homepage": "https://github.com/Songs-of-War/Nebula",
   "devDependencies": {
     "@types/fs-extra": "^9.0.1",
     "@types/node": "^12.12.50",

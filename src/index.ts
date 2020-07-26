@@ -300,25 +300,6 @@ const recommendedForgeCommand: yargs.CommandModule = {
     }
 }
 
-const testCommand: yargs.CommandModule = {
-    command: 'test <mcVer> <forgeVer>',
-    describe: 'Validate a distribution.json against the spec.',
-    builder: (yargs) => {
-        return namePositional(yargs)
-    },
-    handler: async (argv) => {
-        logger.debug(`Invoked test with mcVer ${argv.mcVer} forgeVer ${argv.forgeVer}`)
-        logger.info(process.cwd())
-        const mcVer = new MinecraftVersion(argv.mcVer as string)
-        const resolver = VersionSegmentedRegistry.getForgeResolver(mcVer,
-            argv.forgeVer as string, getRoot(), '', getBaseURL())
-        if (resolver != null) {
-            const mdl = await resolver.getModule()
-            logger.info(inspect(mdl, false, null, true))
-        }
-    }
-}
-
 // Registering yargs configuration.
 // tslint:disable-next-line:no-unused-expression
 yargs
@@ -329,7 +310,6 @@ yargs
     .command(validateCommand)
     .command(latestForgeCommand)
     .command(recommendedForgeCommand)
-    .command(testCommand)
     .demandCommand()
     .help()
     .argv
