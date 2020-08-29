@@ -219,7 +219,7 @@ export class ForgeGradle3Adapter extends ForgeResolver {
         ForgeGradle3Adapter.logger.info(workDir)
         ForgeGradle3Adapter.logger.info('===========================================')
 
-        await this.executeInstaller(workingInstaller)
+        await this.executeInstaller(workingInstaller, workDir)
 
         ForgeGradle3Adapter.logger.debug('Installer finished, beginning processing..')
 
@@ -425,22 +425,25 @@ export class ForgeGradle3Adapter extends ForgeResolver {
 
     }
 
-    private executeInstaller(installerExec: string): Promise<void> {
+    private executeInstaller(installerExec: string, workingDirectory: string): Promise<void> {
         return new Promise(resolve => {
             const fiLogger = LoggerUtil.getLogger('Forge Installer')
             const child = spawn(JavaUtil.getJavaExecutable(), [
                 '-jar',
-                installerExec
+                installerExec,
+                '-installClient',
+                workingDirectory
             ], {
                 cwd: dirname(installerExec)
             })
+            
             child.stdout.on('data', (data) => fiLogger.info(data.toString('utf8').trim()))
             child.stderr.on('data', (data) => fiLogger.error(data.toString('utf8').trim()))
             child.on('close', code => {
                 if(code === 0) {
                     fiLogger.info('Exited with code', code)
                 } else {
-                    fiLogger.error('Exited with code', code)
+                    fiLogger.error('Exited with code', code, 'Param: ', child.spawnargs.toString())
                 }
                 
                 resolve()
